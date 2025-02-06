@@ -7,39 +7,23 @@ import numpy as np
 class Corners(cube.Cube, inspection.Inspect):
     
     
-    def __init__(self, scrambled_faces, buffer_pieces, max_sequence_len, special_cases={None:None}):
+    def __init__(self, scrambled_faces, buffer_pieces, max_letters_count):
         cube.Cube.__init__(self)
-        inspection.Inspect.__init__(self, buffer_pieces, max_sequence_len, special_cases)
-        
+        inspection.Inspect.__init__(self, buffer_pieces, max_letters_count)
+
+        self.special_cases = {None:None} 
         self.scrambled_faces = scrambled_faces
         
         self.getSwappingAndParityAlgorithms()
         
-        self.getSolvedPieces()
-        self.getSolvedFirstMirrorPieces()
-        self.getSolvedSecondMirrorPieces()
+        self.getCorrectPieces()
+        self.getCorrectFirstMirrorPieces()
+        self.getCorrectSecondMirrorPieces()
         
         self.getScrambledPieces()
         self.getScrambledFirstMirrorPieces()
         self.getScrambledSecondMirrorPieces()
         
-        
-    def _updateUnexploredPieces(self):
-        super()._updateUnexploredPieces()
-
-        self.unexplored_pieces.clear()
-        for piece in self.unsolved_pieces.keys():
-            mirror_piece1 = piece[1:] + piece[0:1]
-            mirror_piece2 = mirror_piece1[1:] + mirror_piece1[0:1]
-            
-            first = ((piece in self.pieces_sequence) and (mirror_piece1 in self.pieces_sequence))
-            second = ((mirror_piece1 in self.pieces_sequence) and (mirror_piece2 in self.pieces_sequence))
-            third = ((piece in self.pieces_sequence) and (mirror_piece2 in self.pieces_sequence))
-            fourth = piece not in self.buffer_pieces
-            
-            if not (first and second and third) and fourth:
-                self.unexplored_pieces.append(piece)
-
         
     def getSwappingAndParityAlgorithms(self):
         self.swapping_algorithms = {
@@ -71,8 +55,8 @@ class Corners(cube.Cube, inspection.Inspect):
         self.parity_algorithm = None 
 
 
-    def getSolvedPieces(self):
-        self.original_pieces = {
+    def getCorrectPieces(self):
+        self.correct_pieces = {
             "aer":(self.faces["up"][0][0], self.faces["left"][0][0], self.faces["back"][0][2]),
             "bqn":(self.faces["up"][0][2], self.faces["back"][0][0], self.faces["right"][0][2]),
             "cmj":(self.faces["up"][2][2], self.faces["right"][0][0], self.faces["front"][0][2]),
@@ -85,28 +69,28 @@ class Corners(cube.Cube, inspection.Inspect):
         }
             
 
-    def getSolvedFirstMirrorPieces(self):
-        self.original_pieces["era"] = self.original_pieces["aer"][1:] + self.original_pieces["aer"][0:1]
-        self.original_pieces["qnb"] = self.original_pieces["bqn"][1:] + self.original_pieces["bqn"][0:1]
-        self.original_pieces["mjc"] = self.original_pieces["cmj"][1:] + self.original_pieces["cmj"][0:1]
-        self.original_pieces["ifd"] = self.original_pieces["dif"][1:] + self.original_pieces["dif"][0:1]
+    def getCorrectFirstMirrorPieces(self):
+        self.correct_pieces["era"] = self.correct_pieces["aer"][1:] + self.correct_pieces["aer"][0:1]
+        self.correct_pieces["qnb"] = self.correct_pieces["bqn"][1:] + self.correct_pieces["bqn"][0:1]
+        self.correct_pieces["mjc"] = self.correct_pieces["cmj"][1:] + self.correct_pieces["cmj"][0:1]
+        self.correct_pieces["ifd"] = self.correct_pieces["dif"][1:] + self.correct_pieces["dif"][0:1]
             
-        self.original_pieces["glu"] = self.original_pieces["ugl"][1:] + self.original_pieces["ugl"][0:1]
-        self.original_pieces["kpv"] = self.original_pieces["vkp"][1:] + self.original_pieces["vkp"][0:1]
-        self.original_pieces["otw"] = self.original_pieces["wot"][1:] + self.original_pieces["wot"][0:1]
-        self.original_pieces["shx"] = self.original_pieces["xsh"][1:] + self.original_pieces["xsh"][0:1]
+        self.correct_pieces["glu"] = self.correct_pieces["ugl"][1:] + self.correct_pieces["ugl"][0:1]
+        self.correct_pieces["kpv"] = self.correct_pieces["vkp"][1:] + self.correct_pieces["vkp"][0:1]
+        self.correct_pieces["otw"] = self.correct_pieces["wot"][1:] + self.correct_pieces["wot"][0:1]
+        self.correct_pieces["shx"] = self.correct_pieces["xsh"][1:] + self.correct_pieces["xsh"][0:1]
 
 
-    def getSolvedSecondMirrorPieces(self):
-        self.original_pieces["rae"] = self.original_pieces["era"][1:] + self.original_pieces["era"][0:1]
-        self.original_pieces["nbq"] = self.original_pieces["qnb"][1:] + self.original_pieces["qnb"][0:1]
-        self.original_pieces["jcm"] = self.original_pieces["mjc"][1:] + self.original_pieces["mjc"][0:1]
-        self.original_pieces["fdi"] = self.original_pieces["ifd"][1:] + self.original_pieces["ifd"][0:1]
+    def getCorrectSecondMirrorPieces(self):
+        self.correct_pieces["rae"] = self.correct_pieces["era"][1:] + self.correct_pieces["era"][0:1]
+        self.correct_pieces["nbq"] = self.correct_pieces["qnb"][1:] + self.correct_pieces["qnb"][0:1]
+        self.correct_pieces["jcm"] = self.correct_pieces["mjc"][1:] + self.correct_pieces["mjc"][0:1]
+        self.correct_pieces["fdi"] = self.correct_pieces["ifd"][1:] + self.correct_pieces["ifd"][0:1]
             
-        self.original_pieces["lug"] = self.original_pieces["glu"][1:] + self.original_pieces["glu"][0:1]
-        self.original_pieces["pvk"] = self.original_pieces["kpv"][1:] + self.original_pieces["kpv"][0:1]
-        self.original_pieces["two"] = self.original_pieces["otw"][1:] + self.original_pieces["otw"][0:1]
-        self.original_pieces["hxs"] = self.original_pieces["shx"][1:] + self.original_pieces["shx"][0:1]
+        self.correct_pieces["lug"] = self.correct_pieces["glu"][1:] + self.correct_pieces["glu"][0:1]
+        self.correct_pieces["pvk"] = self.correct_pieces["kpv"][1:] + self.correct_pieces["kpv"][0:1]
+        self.correct_pieces["two"] = self.correct_pieces["otw"][1:] + self.correct_pieces["otw"][0:1]
+        self.correct_pieces["hxs"] = self.correct_pieces["shx"][1:] + self.correct_pieces["shx"][0:1]
 
 
     def getScrambledPieces(self):
@@ -149,28 +133,30 @@ class Corners(cube.Cube, inspection.Inspect):
 
 if __name__ == "__main__":
     scrambled_cube = cube.Cube()
-    movement = movement.Move()
+    move = movement.Move()
 
-    scramble_algorithm = "F U D R2 F2 U' B U B U R2 B' U L2 U B2 U2 F2 L2 U'"
+    # scramble_algorithm = "U' B2 U L2 D L2 R2 D' B' R D' L R' B2 U2 F' L' U'"
+    # scramble_algorithm = "F U D R2 F2 U' B U B U R2 B' U L2 U B2 U2 F2 L2 U'"
     # scramble_algorithm = "R L B R F' B' D' F2 L2 U2 R' F2 U' B' F L R2 B F' R' B' L2 U2 R2 B' L2 U' F' L U"
+    scramble_algorithm = "B' F' R2 U2 B F' U2 L' F' D2 U' L2 R' F2 D B F' D L2 B R' L2 D2 U B' R2 L' B2 R2 L'"
     print(scramble_algorithm)
-    movement.executeAlgorithm(scramble_algorithm, scrambled_cube.faces)
+    move.executeAlgorithm(scramble_algorithm, scrambled_cube.faces)
 
-    corners = Corners(scrambled_cube.faces, ["aer", "era", "rae"], 14)
+    corners = Corners(scrambled_cube.faces, ["aer", "era", "rae"], 21)
     corners.display()
-    print(corners.original_pieces["era"])
-    print(corners.original_pieces["rae"])
     print()
 
     scrambled_cube.display()
-    print(corners.scrambled_pieces["era"])
-    print(corners.scrambled_pieces["rae"])
-    corners.inspect("era", enable_parity=False)
-    print()
+    corners.inspect("uk", enable_parity=True)
     print(corners.pieces_sequence)
-    print(corners.letters_sequence)
+    letters_sequence = corners.getLettersSequence()
+    print(" ".join(letters_sequence))
+    solution = corners.getSolution(letters_sequence)
     print(corners.is_parity)
-    movement.executeAlgorithm(" ".join(corners.solution), scrambled_cube.faces)
-    corners.display()
-    print(" ".join(corners.solution))
+    print()
+    for algorithm in solution:
+        print(algorithm)
+        move.executeAlgorithm(algorithm, scrambled_cube.faces)
+    print()
+    scrambled_cube.display()
     print()

@@ -21,7 +21,7 @@ class Move:
         new_algorithm = []
         for move in algorithm:
             if not (move == " " or move == "" or move == None):
-                new_algorithm.append(move)
+                new_algorithm.append(move.strip())
         return new_algorithm
 
     def _getMoveInfo(self, move):

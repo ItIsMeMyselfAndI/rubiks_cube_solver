@@ -1,1 +1,29 @@
 m v f n t u x s
+
+q w g n x l e c b j l v o #edge
+q w g n x i m p f d s v o #main
+
+list solved pieces
+get initial piece [buffer]
+
+loop while not all pieces is solved:
+    
+    list unexplored pieces
+    piece is unexplored or buffer
+        set reselect as false
+        
+        get piece colors
+        get correct position of the piece colors
+        get the piece of the correct position
+        
+        piece is buffer 
+            select new piece
+            set reselect as true
+        
+        reselect is false
+            add piece to solved pieces
+        
+        add new piece to the sequence
+
+
+
