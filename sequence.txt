@@ -1,5 +1,8 @@
 m v f n t u x s
 
+['qa', 'ci' | 'mb', 'pj' | 'fl', 'de' | 'sw', 'mb' | 'tn', 'gx'| 'nt', 'vo' | 'ov']
+q w m p f d s m t g n v o
+
 q w g n x l e c b j l v o #edge
 q w g n x i m p f d s v o #main
 

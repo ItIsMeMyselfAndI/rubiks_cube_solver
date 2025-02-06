@@ -24,6 +24,7 @@ class Move:
                 new_algorithm.append(move.strip())
         return new_algorithm
 
+
     def _getMoveInfo(self, move):
         symbol = move[0]
         repetition = 1  # default

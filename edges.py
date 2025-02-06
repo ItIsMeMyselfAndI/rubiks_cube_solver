@@ -137,6 +137,7 @@ class Edges(cube.Cube, inspection.Inspect):
 if __name__ == "__main__":
     my_cube = cube.Cube()
     move = movement.Move()
+
     scramble_algorithm = "L2 F B L F' B2 L' R' F' L U' B2 R' F D2 R' F' B2 R2 D2 B F D2 U2 R2 D' B2 L F' B'"
     # scramble_algorithm = "U' B2 U L2 D L2 R2 D' B' R D' L R' B2 U2 F' L' U'"
     # scramble_algorithm = "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2"

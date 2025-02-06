@@ -3,35 +3,35 @@ import numpy as np
 class Cube: 
     def __init__(self):
         self.faces = {
-            "front": np.array([
-                ["g", "g", "g"],
-                ["g", "g", "g"],
-                ["g", "g", "g"],
-            ]),
-            "back": np.array([
-                ["b", "b", "b"],
-                ["b", "b", "b"],
-                ["b", "b", "b"],
+            "up": np.array([
+                ["w", "w", "w"],
+                ["w", "w", "w"],
+                ["w", "w", "w"],
             ]),
             "left": np.array([
                 ["o", "o", "o"],
                 ["o", "o", "o"],
                 ["o", "o", "o"],
             ]),
-            "right": np.array([
-                ["r", "r", "r"],
-                ["r", "r", "r"],
-                ["r", "r", "r"],
+            "front": np.array([
+                ["g", "g", "g"],
+                ["g", "g", "g"],
+                ["g", "g", "g"],
             ]),
             # "right": np.array([
             #     ["0", "1", "2"],
             #     ["3", "4", "5"],
             #     ["6", "7", "8"],
             # ]),
-            "up": np.array([
-                ["w", "w", "w"],
-                ["w", "w", "w"],
-                ["w", "w", "w"],
+            "right": np.array([
+                ["r", "r", "r"],
+                ["r", "r", "r"],
+                ["r", "r", "r"],
+            ]),
+            "back": np.array([
+                ["b", "b", "b"],
+                ["b", "b", "b"],
+                ["b", "b", "b"],
             ]),
             "down": np.array([
                 ["y", "y", "y"],
