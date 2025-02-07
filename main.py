@@ -22,7 +22,9 @@ def main():
     # execute scramble
     move = movement.Move()
     move.executeAlgorithm(scramble_algorithm, my_cube.faces)
-    print("\n[Scrambled Cube]\n")
+    
+    # display scrambled state 
+    print("\n[Scrambled State]\n")
     my_cube.display()
     print(f"\n\t{"Scramble:":<10} {scramble_algorithm}\n")
 
@@ -38,20 +40,36 @@ def main():
     corner_solution = my_corners.getSolution(corners_sequence)
 
     # execute solutions
-    print("[Solved Cube]\n")
     move.executeAlgorithm(" ".join(edge_solution), my_cube.faces)
     move.executeAlgorithm(" ".join(corner_solution), my_cube.faces)
+
+    # display solved state and solutions 
+    print("[Solved State]\n")
     my_cube.display()
-    
     print("\n[Solution Sequence]\n")
     print(f"\t{"Edges:":<10} {" ".join(edges_sequence)}")
     print(f"\t{"Parity:":<10} {my_edges.is_parity}")
     print(f"\t{"Corners:":<10} {" ".join(corners_sequence)}\n")
-
     print("[Solution Algorithms]\n")
     my_edges.displaySolution("Edges:", edge_solution)
     my_corners.displaySolution("Corners:", corner_solution)
 
+    # count number of moves
+    edge_move_count = 0
+    for algorithm in edge_solution:
+        count = len(algorithm.split(" "))
+        edge_move_count += count
+    corner_move_count = 0
+    for algorithm in corner_solution:
+        count = len(algorithm.split(" "))
+        corner_move_count += count
+    total_count = edge_move_count + corner_move_count
+
+    # display move count
+    print("[Move Count]\n")
+    print(f"\t{"Edges:":<10} {edge_move_count}")
+    print(f"\t{"Corners:":<10} {corner_move_count}")
+    print(f"\t{"Total:":<10} {total_count}\n")
 
 
 
