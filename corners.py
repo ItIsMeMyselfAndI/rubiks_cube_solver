@@ -38,7 +38,7 @@ class Corners(cube.Cube, inspection.Inspect):
             "i":"F R' R U' R' U' R U R' F' R U R' U' R' F R R F'",
             "j":"R' R U' R' U' R U R' F' R U R' U' R' F R R",
             "k":"R' D' R U' R' U' R U R' F' R U R' U' R' F R D R",
-            "l":"F2 R R U' R' U' R U R' F' R U R' U' R' F R R' F2",
+            "l":"F2 R' R U' R' U' R U R' F' R U R' U' R' F R R F2",
             "m":"F R U' R' U' R U R' F' R U R' U' R' F R F'",
             "n":"R' F R U' R' U' R U R' F' R U R' U' R' F R F' R",
             "o":"R2' F R U' R' U' R U R' F' R U R' U' R' F R F' R2",
@@ -135,7 +135,8 @@ if __name__ == "__main__":
     my_cube = cube.Cube()
     move = movement.Move()
 
-    scramble_algorithm = "L2 F B L F' B2 L' R' F' L U' B2 R' F D2 R' F' B2 R2 D2 B F D2 U2 R2 D' B2 L F' B'"
+    scramble_algorithm = "L' R U' D' R2 B D F U' B2 D L U R L2 U F2 B' L2 D2 B' R U L2 F R' D U2 B2 D2"
+    # scramble_algorithm = "L2 F B L F' B2 L' R' F' L U' B2 R' F D2 R' F' B2 R2 D2 B F D2 U2 R2 D' B2 L F' B'"
     # scramble_algorithm = "U' B2 U L2 D L2 R2 D' B' R D' L R' B2 U2 F' L' U'"
     # scramble_algorithm = "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2"
     # scramble_algorithm = "R L B R F' B' D' F2 L2 U2 R' F2 U' B' F L R2 B F' R' B' L2 U2 R2 B' L2 U' F' L U"
@@ -150,12 +151,14 @@ if __name__ == "__main__":
     my_cube.display()
     corners.inspect("era", enable_parity=False)
     print(corners.pieces_sequence)
-    letters_sequence = corners.getLettersSequence()
-    print(" ".join(letters_sequence))
-    solution = corners.getSolution(letters_sequence)
+    corners_sequence = corners.getLettersSequence()
+    print(" ".join(corners_sequence))
+    corner_solution = corners.getSolution(corners_sequence)
     print(corners.is_parity)
     print()
-    move.executeAlgorithm(" ".join(solution), my_cube.faces)
+    move.executeAlgorithm(" ".join(corner_solution), my_cube.faces)
     print()
     my_cube.display()
     print()
+    for algorithm in corner_solution:
+        print(algorithm)
