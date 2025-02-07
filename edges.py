@@ -37,7 +37,6 @@ class Edges(cube.Cube, inspection.Inspect):
             "f":"B L2 B' M2' B L2 B'",
             "g":"B L B' M2' B L' B'", 
             "h":"L B L' B' M2' B L B' L'",
-
             "i":"D M' U R2 U' M U R2 U' D' M2'", # special 
             "j":"U R U' M2' U R' U'",
             "k":None, 

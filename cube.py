@@ -40,7 +40,7 @@ class Cube:
             ]),
         }
 
-    def display(self):
+    def formatDisplay(self):
         # - - - - - - - - - - - - - - - - -
         # | $ $ $ | w w w | $ $ $ | $ $ $ |
         # | $ $ $ | w w w | $ $ $ | $ $ $ |
@@ -57,7 +57,7 @@ class Cube:
         up, down = self.faces["up"], self.faces["down"]
         left, right = self.faces["left"], self.faces["right"]
         front, back = self.faces["front"], self.faces["back"]
-        formatted_cube = (
+        lines = (
             f"\t{" "*7} - - - - -\n"
             f"\t{" "*7} | {" ".join(up[0])} |\n"
             f"\t{" "*7} | {" ".join(up[1])} |\n"
@@ -70,7 +70,7 @@ class Cube:
             f"\t{" "*7} | {" ".join(down[0])} |\n"
             f"\t{" "*7} | {" ".join(down[1])} |\n"
             f"\t{" "*7} | {" ".join(down[2])} |\n"
-            f"\t{" "*7} - - - - -"
+            f"\t{" "*7} - - - - -\n"
         )
-        print(formatted_cube)
+        return lines
 

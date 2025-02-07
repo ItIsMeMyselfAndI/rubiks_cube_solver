@@ -107,11 +107,19 @@ class Inspect:
         return solution
     
 
-    def displaySolution(self, label, solution):
+    def formatSolutionDisplay(self, label, solution):
+        lines = []
         for i, algorithm in enumerate(solution):
             if i == 0:
-                line = f"\t{label:<10} {algorithm}"
+                lines.append(f"\t{label:<10} {algorithm}\n")
             else:
-                line = f"{"":<18} {algorithm}"
-            print(line)
-        print()
+                lines.append(f"{"":<18} {algorithm}\n")
+        return "".join(lines)
+    
+
+    def getMoveCount(self, solution):
+        move_count = 0
+        for algorithm in solution:
+            count = len(algorithm.split(" "))
+            move_count += count
+        return move_count
