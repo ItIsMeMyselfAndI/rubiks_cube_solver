@@ -105,3 +105,13 @@ class Inspect:
             solution.append(self.parity_algorithm)
 
         return solution
+    
+
+    def displaySolution(self, label, solution):
+        for i, algorithm in enumerate(solution):
+            if i == 0:
+                line = f"\t{label:<10} {algorithm}"
+            else:
+                line = f"{"":<18} {algorithm}"
+            print(line)
+        print()
