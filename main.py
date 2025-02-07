@@ -16,7 +16,7 @@ def getScrambleAlgorithm(available_moves):
 
 def _getUserChoice():
     lines = (
-        f"\n[Options]\n\n"
+        f"\n[Scramble]\n\n"
         f"\tY - Create own scramble\n"
         f"\tN - Generate random scramble\n"
     )
