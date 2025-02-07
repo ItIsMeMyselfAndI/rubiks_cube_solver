@@ -1,11 +1,6 @@
-import cube
-import movement
-import scramble
-import edges
-import corners
+import cube, movement, scramble, edges, corners
 
-
-import os
+import os, sys, time
 
 
 def getScrambleAlgorithm(available_moves):
@@ -22,14 +17,16 @@ def getScrambleAlgorithm(available_moves):
 def _getUserChoice():
     lines = (
         f"\n[Options]\n\n"
-        f"\t(Y) - Create own scramble\n"
-        f"\t(N) - Generate random scramble\n"
+        f"\tY - Create own scramble\n"
+        f"\tN - Generate random scramble\n"
     )
     while True:
         os.system("cls")
         print(lines)
-        choice = input("Do you want to create your own scramble (Y/N)? ").upper()
+        choice = input("Enter valid option (Y/N)? ").upper()
         if choice in ["Y", "N"]:
+            print("\nplease wait ...\n")
+            time.sleep(2)
             return choice
 
 
@@ -39,7 +36,6 @@ def _getUserScramble(moves):
     for i in range(0, length, 4):
         lines.append(f"\t- {moves[i]} or {moves[i+1]} or {moves[i+2]} or {moves[i+3]}\n")
     lines = "".join(lines)
-
     while True:
         os.system("cls")
         print(lines)
@@ -47,6 +43,8 @@ def _getUserScramble(moves):
         scramble_algorithm = input("\t- ")
         for move in scramble_algorithm.split():
             if move in moves:
+                print("\nplease wait ...\n")
+                time.sleep(2)
                 return scramble_algorithm.strip()
 
 
@@ -78,6 +76,28 @@ def getCornersInspectionInfo(my_cube):
 
     ]
     return info
+
+
+def getUserMenuChoice():
+    lines = (
+        f"[Menu]\n\n"
+        f"\t1 - Display scrambled cube\n"
+        f"\t2 - Display solved cube\n"
+        f"\t3 - Display solution sequence\n"
+        f"\t4 - Display solution algorithm\n"
+        f"\t5 - Display solution move count\n"
+        f"\t6 - Create new scramble\n"
+        f"\t7 - Exit\n"
+    )
+    print(lines)
+    while True:
+        os.system("cls")
+        print(lines)
+        choice = input("Enter valid option (1-7): ")
+        if choice in [str(x) for x in range(1, 8)]:
+            print("\nplease wait ...\n")
+            time.sleep(2)
+            return int(choice)
 
 
 def displayScrambledState(scrambled_cube_display, scramble_algorithm):
@@ -124,7 +144,6 @@ def main():
     # create new cube
     my_cube = cube.Cube()
     move = movement.Move()
-    
     # generate scramble
     scramble_algorithm = getScrambleAlgorithm(available_moves)
     # execute scramble
@@ -137,18 +156,25 @@ def main():
     move.executeAlgorithm(" ".join(edges_info[1]), my_cube.faces)
     move.executeAlgorithm(" ".join(corners_info[1]), my_cube.faces)
     solved_cube_display = my_cube.formatDisplay()
-    
-    # display scrambled state 
-    displayScrambledState(scrambled_cube_display, scramble_algorithm)    
-    # display solved state
-    displaySolvedState(solved_cube_display)
 
-    # display solution sequence
-    displaySolutionSequence(edges_info, corners_info) 
-    # display solution algorithm 
-    displaySolutionAlgorithm(edges_info, corners_info)
-    # display move count
-    displayMoveCount(edges_info, corners_info)
+    while True:
+        choice = getUserMenuChoice()
+        os.system("cls")
+        if choice == 1:
+            displayScrambledState(scrambled_cube_display, scramble_algorithm),
+        elif choice == 2:
+            displaySolvedState(solved_cube_display),
+        elif choice == 3:
+            displaySolutionSequence(edges_info, corners_info),
+        elif choice == 4:
+            displaySolutionAlgorithm(edges_info, corners_info),
+        elif choice == 5:
+            displayMoveCount(edges_info, corners_info),
+        elif choice == 6:
+            main()
+        elif choice == 7:
+            sys.exit()
+        input("\n...enter anything to go back to [Menu]\n")
 
 
 if __name__ == "__main__":
